@@ -8,17 +8,29 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
+
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Déployer via rsync
+
       - name: Récupérer le code
         uses: actions/checkout@v3
 
       - name: Déployer vers le NAS via rsync
+
         uses: burnett01/rsync-deployments@5.1
         with:
           switches: -avz --delete
           path: ./
           remote_path: /volume1/web/le2m-preprod/
+
+          remote_host: ton_ip_nas_publique
+          remote_user: loicadmin
+          remote_key: ${{ secrets.NAS_PRIVATE_KEY }}
+
           remote_host: 82.66.122.160
           remote_user: loicadmin
           remote_key: ${{ secrets.NAS_PRIVATE_KEY }}
+
 
