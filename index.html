@@ -78,8 +78,58 @@
         }
     </style>
 </head>
+<!-- Matomo -->
+<script>
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u = "//monitoring.le2mholding.com/";
+      _paq.push(['setTrackerUrl', u + 'matomo.php']);
+      _paq.push(['setSiteId', '2']);
+      var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+      g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+    })();
+  </script>
+  
+  <script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+  
+      const form = e.target;
+      const formData = new FormData(form);
+  
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.text())
+      .then(data => {
+        // 🔥 TRACKING MATOMO personnalisé
+        _paq.push(['trackEvent', 'Formulaire', 'Soumis', 'Contact']);
+  
+        const confirmation = document.createElement('div');
+        confirmation.innerText = "✅ Votre message a été envoyé avec succès.";
+        confirmation.className = "bg-green-100 text-green-800 p-4 mt-4 rounded";
+        form.after(confirmation);
+        form.reset();
+      })
+      .catch(error => {
+        const errorMsg = document.createElement('div');
+        errorMsg.innerText = "❌ Une erreur s’est produite. Réessayez plus tard.";
+        errorMsg.className = "bg-red-100 text-red-800 p-4 mt-4 rounded";
+        form.after(errorMsg);
+      });
+    });
+  </script>
+  
+  
+  <!-- End Matomo Code -->
 <body class="bg-white text-gray-800">
-   
+    <div style="background-color: red; color: white; text-align: center; padding: 10px; font-weight: bold; position: sticky; top: 0; z-index: 9999;">
+        ⚠️ Vous êtes dans l’environnement de Préproduction.
+      </div>
+      
     <!-- Navigation -->
     <nav class="fixed w-full bg-white shadow-sm z-50">
         <div class="container mx-auto px-6 py-4">
@@ -436,113 +486,152 @@
             <a href="#contact" class="inline-block px-8 py-3 bg-white text-yellow-700 font-semibold rounded-md transition hover:bg-gray-100">Prendre rendez-vous</a>
         </div>
     </section>
-    
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col lg:flex-row">
-                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6 gold-border-bottom inline-block">Contactez-nous</h2>
-                    <p class="text-gray-600 mb-8">Notre équipe est à votre disposition pour répondre à toutes vos questions et discuter de vos projets.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mt-1">
-                                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-map-marker-alt text-yellow-700"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-semibold">Adresse</h4>
-                                <p class="text-gray-600">Angré, Cnps en bas <br>Abidjan, C.I.V</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mt-1">
-                                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-phone-alt text-yellow-700"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-semibold">Téléphone</h4>
-                                <p class="text-gray-600">+225 07 77 46 04 98</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mt-1">
-                                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-envelope text-yellow-700"></i>
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="text-lg font-semibold">Email</h4>
-                                <p class="text-gray-600">mpbonny@le2mholding.com</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-12">
-                        <h4 class="text-lg font-semibold mb-4">Suivez-nous</h4>
-                        <div class="flex space-x-4">
-                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </div>
-                    </div>
+<section id="contact" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col lg:flex-row">
+        
+        <!-- Infos -->
+        <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6 gold-border-bottom inline-block">Contactez-nous</h2>
+          <p class="text-gray-600 mb-8">Notre équipe est à votre disposition pour répondre à toutes vos questions et discuter de vos projets.</p>
+  
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <i class="fas fa-map-marker-alt text-yellow-700"></i>
                 </div>
-                
-                <div class="lg:w-1/2" data-aos="fade-left">
-                    <form class="bg-gray-50 p-8 rounded-lg shadow-md">
-                        <div class="mb-6">
-                            <label for="name" class="block text-gray-700 font-medium mb-2">Nom complet</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="email" class="block text-gray-700 font-medium mb-2">Adresse email</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="phone" class="block text-gray-700 font-medium mb-2">Téléphone</label>
-                            <input type="tel" id="phone" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="subject" class="block text-gray-700 font-medium mb-2">Sujet</label>
-                            <select id="subject" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                <option value="">Sélectionnez un sujet</option>
-                                <option value="investment">Benchmarking </option>
-                                <option value="real-estate">Immobilier</option>
-                                <option value="consulting">Consulting</option>
-                                <option value="other">Autre</option>
-                            </select>
-                        </div>
-                        
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="gold-btn w-full px-8 py-3 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white font-semibold rounded-md transition hover:from-yellow-700 hover:to-yellow-900">
-                            Envoyer le message
-                        </button>
-                    </form>
-                </div>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold">Adresse</h4>
+                <p class="text-gray-600">Angré, Cnps en bas <br>Abidjan, C.I.V</p>
+              </div>
             </div>
+  
+            <div class="flex items-start">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <i class="fas fa-phone-alt text-yellow-700"></i>
+                </div>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold">Téléphone</h4>
+                <p class="text-gray-600">+225 07 77 46 04 98</p>
+              </div>
+            </div>
+  
+            <div class="flex items-start">
+              <div class="flex-shrink-0 mt-1">
+                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                  <i class="fas fa-envelope text-yellow-700"></i>
+                </div>
+              </div>
+              <div class="ml-4">
+                <h4 class="text-lg font-semibold">Email</h4>
+                <p class="text-gray-600">mpbonny@le2mholding.com</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="mt-12">
+            <h4 class="text-lg font-semibold mb-4">Suivez-nous</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 hover:bg-yellow-100 hover:text-yellow-700 transition">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+          </div>
         </div>
-    </section>
+  
+        <!-- Formulaire -->
+        <div class="lg:w-1/2" data-aos="fade-left">
+          <form id="contactForm" class="bg-gray-50 p-8 rounded-lg shadow-md" action="https://api.le2mholding.com/submit" method="POST">
+            <div class="mb-6">
+              <label for="name" class="block text-gray-700 font-medium mb-2">Nom complet</label>
+              <input type="text" id="name" name="nom" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+            </div>
+  
+            <div class="mb-6">
+              <label for="email" class="block text-gray-700 font-medium mb-2">Adresse email</label>
+              <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+            </div>
+  
+            <div class="mb-6">
+              <label for="phone" class="block text-gray-700 font-medium mb-2">Téléphone</label>
+              <input type="tel" id="phone" name="telephone" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+            </div>
+  
+            <div class="mb-6">
+              <label for="subject" class="block text-gray-700 font-medium mb-2">Sujet</label>
+              <select id="subject" name="sujet" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                <option value="">Sélectionnez un sujet</option>
+                <option value="investment">Benchmarking</option>
+                <option value="real-estate">Immobilier</option>
+                <option value="consulting">Consulting</option>
+                <option value="other">Autre</option>
+              </select>
+            </div>
+  
+            <div class="mb-6">
+              <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+              <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500" required></textarea>
+            </div>
+  
+            <button type="submit" class="gold-btn w-full px-8 py-3 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white font-semibold rounded-md transition hover:from-yellow-700 hover:to-yellow-900">
+              Envoyer le message
+            </button>
+          </form>
+  
+          <!-- Script JS -->
+          <script>
+            document.querySelector('form').addEventListener('submit', function (e) {
+              e.preventDefault(); // bloque le rechargement de page
+              const form = e.target;
+              const formData = new FormData(form);
+              const jsonData = {};
+          
+              formData.forEach((value, key) => {
+                jsonData[key] = value;
+              });
+          
+              fetch(form.action, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonData)
+              })
+              .then(response => response.text())
+              .then(data => {
+                const confirmation = document.createElement('div');
+                confirmation.innerText = "✅ Votre message a été envoyé avec succès.";
+                confirmation.className = "bg-green-100 text-green-800 p-4 mt-4 rounded";
+                form.after(confirmation);
+                form.reset();
+              })
+              .catch(error => {
+                const errorMsg = document.createElement('div');
+                errorMsg.innerText = "❌ Une erreur s’est produite. Réessayez plus tard.";
+                errorMsg.className = "bg-red-100 text-red-800 p-4 mt-4 rounded";
+                form.after(errorMsg);
+              });
+            });
+          </script>          
+        </div>
+      </div>
+    </div>
+  </section>
+  
     
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
@@ -670,5 +759,39 @@
             });
         }
     </script>
+
+        <!-- ton formulaire ici -->
+
+        <script>
+            document.querySelector('form').addEventListener('submit', function (e) {
+              e.preventDefault(); // Empêche l’envoi par défaut
+        
+              const form = e.target;
+              const formData = new FormData(form);
+        
+              fetch(form.action, {
+                method: 'POST',
+                body: formData,
+              })
+              .then(response => response.text())
+              .then(data => {
+                const confirmation = document.createElement('div');
+                confirmation.innerText = "✅ Votre message a été envoyé avec succès.";
+                confirmation.className = "bg-green-100 text-green-800 p-4 mt-4 rounded";
+                form.after(confirmation);
+                form.reset();
+              })
+              .catch(error => {
+                const errorMsg = document.createElement('div');
+                errorMsg.innerText = "❌ Une erreur s’est produite. Réessayez plus tard.";
+                errorMsg.className = "bg-red-100 text-red-800 p-4 mt-4 rounded";
+                form.after(errorMsg);
+              });
+            });
+            </script>
+        </body>
+        </html>
+        
 </body>
 </html>
+
